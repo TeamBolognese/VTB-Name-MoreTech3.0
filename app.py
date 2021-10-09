@@ -28,7 +28,6 @@ def show_index():
     '''
     The front "index" page
     '''
-    response.add_header('Access-Control-Allow-Origin', '*')
     return '''
 <head><title>Hack API</title></head><h2>Hackathon API</h2>
 <h3><br>Endpoints:</h3>
@@ -66,12 +65,17 @@ def register():
 def do_register():
     username = request.forms.get('username')
     password = sha256(request.forms.get('password').encode()).hexdigest()
-    resp = cursor.execute("INSERT INTO users (username, password) VALUES ('" + username + "','" + password +"');")
-    connect.commit()
-    if (len(resp.fetchall()) > 0):
-        return "{\"result\":\"false\"}"
+    if(username.isalnum()):
+        # Валидация ввода
+        # TODO: переписать на prepared statements
+        resp = cursor.execute("INSERT INTO users (username, password) VALUES ('" + username + "','" + password +"');")
+        connect.commit()
+        if (len(resp.fetchall()) > 0):
+            return "{\"result\":\"false\"}"
+        else:
+            return "{\"result\":\"true\"}"
     else:
-        return "{\"result\":\"true\"}"
+        return "{\"result\":\"bad_characters\"}"
 
 @app.route('/login')
 def login():
@@ -87,11 +91,16 @@ def login():
 def do_login():
     username = request.forms.get('username')
     password = sha256(request.forms.get('password').encode()).hexdigest()
-    resp = cursor.execute("SELECT user_id FROM users WHERE username='" + username + "' AND password='" + password + "';")
-    if (len(resp.fetchall()) == 1):
-        return "{\"result\":\"true\",\"token\":\"" + token_hex() + "\"}"
+    if(username.isalnum()):
+        # Валидация ввода
+        # TODO: переписать на prepared statements
+        resp = cursor.execute("SELECT user_id FROM users WHERE username='" + username + "' AND password='" + password + "';")
+        if (len(resp.fetchall()) == 1):
+            return "{\"result\":\"true\",\"token\":\"" + token_hex() + "\"}"
+        else:
+            return bottle.HTTPResponse(status=403)
     else:
-        return bottle.HTTPResponse(status=403)
+        return "{\"result\":\"bad_characters\"}"
 
 @app.route('/api/get/users')
 def users():
