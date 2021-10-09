@@ -9,9 +9,8 @@ class StartScreen extends StatelessWidget {
   final _nameController = TextEditingController(text: "Нео");
 
   void _showPasswordPage(BuildContext context) {
-    final _name = _nameController.text;
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => WelcomeScreen(name: _name)));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
   }
 
   @override

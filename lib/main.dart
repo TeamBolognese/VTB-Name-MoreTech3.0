@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:moretech_app/auth/start_screen.dart';
 import 'package:moretech_app/constants.dart';
+import 'package:moretech_app/welcome/welcome_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(backgroundColor: pureWhite),
       debugShowCheckedModeBanner: false,
-      home: StartScreen(),
+      home: WelcomeScreen(),
     );
   }
 }
