@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:moretech_app/auth/screens/login_password_screen.dart';
-import 'package:moretech_app/auth/screens/register_screen.dart';
 import 'package:moretech_app/constants.dart';
 import 'package:moretech_app/welcome/welcome_screen.dart';
 

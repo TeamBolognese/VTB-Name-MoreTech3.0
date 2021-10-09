@@ -1,12 +1,14 @@
 class Question {
-  final int number;
-  final String question;
-  final bool inputAnswer;
-  final List<String>? answers;
+  int number;
+  String question;
+  bool inputAnswer;
+  List<String>? answers;
+  String? userAnswer;
 
   Question(
       {required this.number,
       required this.question,
       required this.inputAnswer,
-      this.answers});
+      this.answers,
+      this.userAnswer});
 }
