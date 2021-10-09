@@ -16,7 +16,7 @@ class NavigationBarScreen extends StatelessWidget {
     OtherPage()
   ];
 
-  final _selectedIndexNotifier = ValueNotifier<int>(0);
+  final _selectedIndexNotifier = ValueNotifier<int>(2);
 
   // Лямбда установления цвета для иконок nav bar'a
   Color _setColor(bool predicate) => predicate ? blue50 : pureWhite;

@@ -86,7 +86,7 @@ class SurveyQuestionsScreen extends StatelessWidget {
                   MaterialButton(
                     minWidth: MediaQuery.of(context).size.width,
                     height: 44,
-                    color: green40,
+                    color: blue60,
                     onPressed: () {},
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -131,7 +131,7 @@ class SurveyQuestionsScreen extends StatelessWidget {
                   MaterialButton(
                     minWidth: MediaQuery.of(context).size.width,
                     height: 38,
-                    color: blue60,
+                    color: green40,
                     onPressed: () => _showSurveyCompletePage(context),
                     child: Text(
                       "Далее",

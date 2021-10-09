@@ -32,4 +32,5 @@ flutter:
   assets:
     - lib/assets/
     - lib/assets/farmer/
+    - lib/assets/farmer_speech/
     - lib/assets/icons/
