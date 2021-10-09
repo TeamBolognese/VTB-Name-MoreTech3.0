@@ -20,7 +20,7 @@ class LoginPasswordScreen extends StatelessWidget {
 
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18),
+        padding: hPadding,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
