@@ -1,6 +1,6 @@
 # API Backend
 
-## app.py - bottle web app with sqlite connection
+## [app.py](app.py) - bottle web app with sqlite connection
 ### Endpoints:<br>
 <b>/api/hello</b> - Hello world [(Link)](https://vtbmt3.teambolognese.ru/api/hello)
 <br><b>/login</b> - Authenticate form [(Link)](https://vtbmt3.teambolognese.ru/login)
@@ -8,7 +8,7 @@
 <br><b>/api/get/users</b> - Get users table [(Link)](https://vtbmt3.teambolognese.ru/api/get/users)
 <br><b>/api/login</b> and <b>/api/register</b> - Login/registration API (POST)
 
-## db.db - sqlite3 database
+## [db.db](db.db) - sqlite3 database
 ### Structure:
 
 ![image](https://user-images.githubusercontent.com/47640060/136656790-da729cfd-ea7c-401c-96d8-902b57d54c74.png)
