@@ -2,6 +2,6 @@
 
 ## Структура проекта
 
-[Mobile app](tree/frontend) - Мобильное приложение (Android/IOS)
+[Mobile app](https://github.com/TeamBolognese/VTB-Name-MoreTech3.0/tree/front) - Мобильное приложение (Android/IOS)
 
-[API Backend](tree/backend) - API сервер на bottle + sqlite3
+[API Backend](https://github.com/TeamBolognese/VTB-Name-MoreTech3.0/tree/backend) - API сервер на bottle + sqlite3
