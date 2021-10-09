@@ -21,3 +21,5 @@ TABLE tree (tree_id INTEGER PRIMARY KEY, health_level INTEGER, type_tree_id INTE
 TABLE types_risk (type_risk_id INTEGER PRIMARY KEY, name TEXT);
 
 TABLE users (user_id INTEGER PRIMARY KEY, username TEXT NOT NULL UNIQUE, password TEXT NOT NULL, gender INTEGER, age INTEGER, fullname TEXT, type_risk_id INTEGER, tree_id INTEGER, water INTEGER, money INTEGER, FOREIGN KEY(tree_id) REFERENCES tree(tree_id), FOREIGN KEY(type_risk_id) REFERENCES types_risk(type_risk_id));
+
+TABLE tokens (token_id INTEGER PRIMARY KEY, user_id INTEGER, token TEXT, FOREIGN KEY(user_id) REFERENCES users(user_id));
