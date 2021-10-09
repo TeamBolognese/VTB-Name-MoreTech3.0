@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:moretech_app/constants.dart';
 
-class WelcomeSurveyPlantDescription extends StatelessWidget {
-  const WelcomeSurveyPlantDescription({Key? key}) : super(key: key);
+class SurveyPlantDescriptionScreen extends StatelessWidget {
+  const SurveyPlantDescriptionScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

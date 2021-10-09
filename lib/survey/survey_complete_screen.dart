@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:moretech_app/constants.dart';
 
-class WelcomeSurveyComplete extends StatelessWidget {
-  const WelcomeSurveyComplete({Key? key}) : super(key: key);
+class SurveyCompleteScreen extends StatelessWidget {
+  const SurveyCompleteScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

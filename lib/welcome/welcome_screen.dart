@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moretech_app/constants.dart';
-import 'package:moretech_app/welcome/survey/welcome_survey.dart';
+import 'package:moretech_app/survey/survey_questions_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key, required this.login}) : super(key: key);
@@ -9,7 +9,7 @@ class WelcomeScreen extends StatelessWidget {
 
   void _showSurveyPage(BuildContext context) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => WelcomeSurvey()));
+        context, MaterialPageRoute(builder: (context) => SurveyScreen()));
   }
 
   @override
