@@ -1,5 +1,5 @@
 # API Backend
-API is up and working on: https://vtbmt3.teambolognese.ru/
+API is up and working on: https://vtbmt3.teambolognese.ru/.
 
 ## [app.py](app.py) - bottle web app with sqlite connection
 ### Endpoints:<br>
@@ -7,6 +7,7 @@ API is up and working on: https://vtbmt3.teambolognese.ru/
 <br><b>/login</b> - Authenticate form [(Link)](https://vtbmt3.teambolognese.ru/login)
 <br><b>/register</b> - Registration form [(Link)](https://vtbmt3.teambolognese.ru/register)
 <br><b>/api/get/users</b> - Get users table [(Link)](https://vtbmt3.teambolognese.ru/api/get/users)
+<br><b>/api/token_check/&lt;token&gt;</b> - Token checker [(Example)](https://vtbmt3.teambolognese.ru/api/token_check/3fdabf52ca2e83fc72816877bc4f197d635a1477ea56b213ae403c644cd133aa)
 <br><b>/api/login</b> and <b>/api/register</b> - Login/registration API (POST)
 
 ## [db.db](db.db) - sqlite3 database
