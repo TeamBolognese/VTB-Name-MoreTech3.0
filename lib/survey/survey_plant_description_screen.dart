@@ -16,10 +16,13 @@ class SurveyPlantDescriptionScreen extends StatelessWidget {
             child: AppBar(
               backgroundColor: pureWhite,
               elevation: 0,
-              leading: Icon(
-                Icons.arrow_back_outlined,
-                size: 24,
-                color: blue60,
+              leading: IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: Icon(
+                  Icons.arrow_back_outlined,
+                  size: 24,
+                  color: blue60,
+                ),
               ),
             ),
           ),

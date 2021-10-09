@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:moretech_app/constants.dart';
+import 'package:moretech_app/survey/survey_prize_screen.dart';
 
 class SurveyCompleteScreen extends StatelessWidget {
   const SurveyCompleteScreen({Key? key}) : super(key: key);
+
+  void _showSurveyPrizePage(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => SurveyPrizeScreen()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +37,7 @@ class SurveyCompleteScreen extends StatelessWidget {
                 minWidth: MediaQuery.of(context).size.width,
                 height: 44,
                 color: green40,
-                onPressed: () {},
+                onPressed: () => _showSurveyPrizePage(context),
                 child: Text(
                   "Забрать подарок!",
                   style: textStyle(14, pureWhite, FontWeight.w500),

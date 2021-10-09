@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:moretech_app/auth/screens/login_login_screen.dart';
 import 'package:moretech_app/constants.dart';
-import 'package:moretech_app/navigation_bar/navigation_bar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(backgroundColor: pureWhite),
       debugShowCheckedModeBanner: false,
-      home: NavigationBar(),
+      home: LoginLoginScreen(),
     );
   }
 }

@@ -8,8 +8,8 @@ class WelcomeScreen extends StatelessWidget {
   final String login;
 
   void _showSurveyPage(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => SurveyScreen()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => SurveyQuestionsScreen()));
   }
 
   @override

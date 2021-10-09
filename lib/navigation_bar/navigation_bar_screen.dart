@@ -6,8 +6,8 @@ import 'package:moretech_app/notifications/notifications_page.dart';
 import 'package:moretech_app/other/other_page.dart';
 import 'package:moretech_app/profile/profile_page.dart';
 
-class NavigationBar extends StatelessWidget {
-  NavigationBar({Key? key}) : super(key: key);
+class NavigationBarScreen extends StatelessWidget {
+  NavigationBarScreen({Key? key}) : super(key: key);
 
   final _screens = [
     HomePage(),

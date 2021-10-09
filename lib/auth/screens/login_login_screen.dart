@@ -7,7 +7,7 @@ import 'package:moretech_app/constants.dart';
 class LoginLoginScreen extends StatelessWidget {
   LoginLoginScreen({Key? key}) : super(key: key);
 
-  final _loginController = TextEditingController();
+  final _loginController = TextEditingController(text: "seljmov");
 
   void _showPasswordPage(BuildContext context) {
     final _login = _loginController.text;
