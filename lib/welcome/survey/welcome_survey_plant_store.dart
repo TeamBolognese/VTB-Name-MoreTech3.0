@@ -83,7 +83,7 @@ class WelcomeSurveyPlantStore extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      "Магазин рещений",
+                      "Магазин решений",
                       style: textStyle(),
                     ),
                   ],

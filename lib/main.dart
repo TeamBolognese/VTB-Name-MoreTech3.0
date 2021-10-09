@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moretech_app/constants.dart';
+import 'package:moretech_app/navigation_bar/navigation_bar.dart';
 import 'package:moretech_app/welcome/survey/welcome_survey_plant_description.dart';
 import 'package:moretech_app/welcome/survey/welcome_survey_plant_store.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(backgroundColor: pureWhite),
       debugShowCheckedModeBanner: false,
-      home: WelcomeSurveyPlantStore(),
+      home: NavigationBar(),
     );
   }
 }

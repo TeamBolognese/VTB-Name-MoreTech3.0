@@ -30,3 +30,4 @@ flutter:
   assets:
     - lib/assets/
     - lib/assets/farmer/
+    - lib/assets/icons/
