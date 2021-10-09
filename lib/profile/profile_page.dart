@@ -3,9 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moretech_app/constants.dart';
 import 'package:moretech_app/profile/components/custom_dialog.dart';
+import 'package:moretech_app/profile/components/quiz_theory_screen.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  ProfilePage({Key? key}) : super(key: key);
 
   dynamic _showCustomDialog(BuildContext context, {Widget? child}) {
     return showDialog(
@@ -14,6 +15,8 @@ class ProfilePage extends StatelessWidget {
               content: child,
             ));
   }
+
+  final _waterNotifier = ValueNotifier(40);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +46,7 @@ class ProfilePage extends StatelessWidget {
                   SvgPicture.asset("lib/assets/userlogo.svg"),
                   SizedBox(height: 24),
                   Text(
-                    "Гарри Каспаров",
+                    "Нео",
                     style: textStyle(18, textColor, FontWeight.w500),
                   ),
                   SizedBox(height: 48),
@@ -101,77 +104,8 @@ class ProfilePage extends StatelessWidget {
                         height: 140,
                         child: GestureDetector(
                           onTap: () => _showCustomDialog(context,
-                              child: SizedBox(
-                                child: Padding(
-                                  padding: hPadding,
-                                  child: Column(
-                                    children: [
-                                      Image.asset(
-                                          "lib/assets/farmer_speech/farmer-speech-quiz.png"),
-                                      Padding(
-                                        padding: hPadding12,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          children: [
-                                            Text(
-                                              "Вопрос 1.",
-                                              style: textStyle(18, textColor,
-                                                  FontWeight.w500),
-                                              textAlign: TextAlign.start,
-                                            ),
-                                            SizedBox(height: 8),
-                                            Text(
-                                              "Длинное описание вопроса \nДлинное описание вопроса",
-                                              style: textStyle(16, textColor),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(height: 76),
-                                      MaterialButton(
-                                        minWidth:
-                                            MediaQuery.of(context).size.width,
-                                        height: 44,
-                                        color: blue60,
-                                        onPressed: () {},
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            SvgPicture.asset(
-                                                "lib/assets/checkmark.svg"),
-                                            SizedBox(width: 10),
-                                            Text(
-                                              "Вариант 1",
-                                              style: textStyle(14, pureWhite,
-                                                  FontWeight.w500),
-                                            )
-                                          ],
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                bntRadius)),
-                                      ),
-                                      SizedBox(height: 16),
-                                      MaterialButton(
-                                        minWidth:
-                                            MediaQuery.of(context).size.width,
-                                        height: 44,
-                                        onPressed: () {},
-                                        child: Text(
-                                          "Вариант 2",
-                                          style: textStyle(
-                                              14, grey70, FontWeight.w500),
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                bntRadius),
-                                            side: BorderSide(color: grey70)),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                              child: QuizTheoryScreen(
+                                waterNotifier: _waterNotifier,
                               )),
                           child: Card(
                             elevation: 4,
@@ -196,25 +130,28 @@ class ProfilePage extends StatelessWidget {
                                     ],
                                   ),
                                   SizedBox(height: 16),
-                                  RichText(
-                                    textAlign: TextAlign.center,
-                                    text: TextSpan(
-                                      children: [
-                                        TextSpan(
-                                            text: "40",
-                                            style: GoogleFonts.montserrat(
-                                              fontSize: 18,
-                                              color: blue40,
-                                              fontWeight: FontWeight.w500,
-                                            )),
-                                        TextSpan(
-                                            text: " / 100",
-                                            style: GoogleFonts.montserrat(
-                                              fontSize: 12,
-                                              color: grey70,
-                                              fontWeight: FontWeight.w500,
-                                            )),
-                                      ],
+                                  ValueListenableBuilder<int>(
+                                    valueListenable: _waterNotifier,
+                                    builder: (_, val, __) => RichText(
+                                      textAlign: TextAlign.center,
+                                      text: TextSpan(
+                                        children: [
+                                          TextSpan(
+                                              text: val.toString(),
+                                              style: GoogleFonts.montserrat(
+                                                fontSize: 18,
+                                                color: blue40,
+                                                fontWeight: FontWeight.w500,
+                                              )),
+                                          TextSpan(
+                                              text: " / 100",
+                                              style: GoogleFonts.montserrat(
+                                                fontSize: 12,
+                                                color: grey70,
+                                                fontWeight: FontWeight.w500,
+                                              )),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   SizedBox(height: 18),
@@ -335,7 +272,7 @@ class ProfilePage extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 52),
-                  Text("Название растения",
+                  Text("Папоротник",
                       style: textStyle(18, textColor, FontWeight.w500)),
                   SizedBox(height: 32),
                   SvgPicture.asset("lib/assets/img_fern_grown.svg"),

@@ -13,7 +13,7 @@ class RegisterScreen extends StatelessWidget {
   void _showWelcomePage(BuildContext context) {
     var login = _loginController.text;
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => WelcomeScreen(login: login)));
+        MaterialPageRoute(builder: (context) => WelcomeScreen(name: login)));
   }
 
   @override

@@ -3,9 +3,9 @@ import 'package:moretech_app/constants.dart';
 import 'package:moretech_app/survey/survey_questions_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({Key? key, required this.login}) : super(key: key);
+  const WelcomeScreen({Key? key, required this.name}) : super(key: key);
 
-  final String login;
+  final String name;
 
   void _showSurveyPage(BuildContext context) {
     Navigator.push(context,
@@ -28,7 +28,7 @@ class WelcomeScreen extends StatelessWidget {
               ),
               SizedBox(height: 32),
               Text(
-                "Привет, $login!",
+                "Привет, $name!",
                 style: textStyle(18, textColor, FontWeight.w500),
               ),
               SizedBox(height: 16),

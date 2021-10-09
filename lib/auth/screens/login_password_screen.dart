@@ -11,10 +11,7 @@ class LoginPasswordScreen extends StatelessWidget {
   final _passwordController = TextEditingController(text: "pa\$\$w0rd");
   final _obscureNotifier = ValueNotifier<bool>(true);
 
-  void _showWelcomePage(BuildContext context) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => WelcomeScreen(login: login)));
-  }
+  void _showWelcomePage(BuildContext context) {}
 
   void _showRegisterPage(BuildContext context) {
     Navigator.push(

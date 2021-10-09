@@ -64,23 +64,15 @@ class SurveyQuestionsScreen extends StatelessWidget {
                     height: 180,
                   ),
                   SizedBox(height: 48),
-                  Padding(
-                    padding: hPadding12,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text(
-                          "Вопрос 1.",
-                          style: textStyle(18, textColor, FontWeight.w500),
-                          textAlign: TextAlign.start,
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          "Длинное описание вопроса \nДлинное описание вопроса",
-                          style: textStyle(16, textColor),
-                        )
-                      ],
-                    ),
+                  Text(
+                    "Вопрос 1.",
+                    style: textStyle(18, textColor, FontWeight.w500),
+                    textAlign: TextAlign.start,
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "Длинное описание вопроса \nДлинное описание вопроса",
+                    style: textStyle(16, textColor),
                   ),
                   SizedBox(height: 76),
                   MaterialButton(
