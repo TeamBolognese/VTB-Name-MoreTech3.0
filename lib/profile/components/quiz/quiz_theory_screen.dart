@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:moretech_app/constants.dart';
+import 'package:moretech_app/profile/components/quiz/components/quiz_provider.dart';
 import 'package:moretech_app/profile/components/quiz/quiz_correct_screen.dart';
 import 'package:moretech_app/profile/components/quiz/quiz_wrong_screen.dart';
 
@@ -9,22 +10,43 @@ class QuizTheoryScreen extends StatelessWidget {
 
   final ValueNotifier<int> waterNotifier;
 
-  /*
-  final _answers = [
-    "Набор активов, собранных таким образом, чтобы доход от них соответствовал определенным целям инвестораортфель с бумагами, который хранится под матрасом",
-    "Портфель с бумагами, который хранится под матрасом",
-    "Пирамида это все!"
-  ];
-  */
+  String _answerPresentView(String str) {
+    var split = str.split(" ");
+    var out = "${split[0]} ${split[1]}";
 
-  final _answers = [
-    "Вариант 1",
-    "Вариант 2",
-  ];
+    // out = out.replaceAll(',', '');
+
+    return out;
+  }
+
+  double _calcListViewHeigth(List<String> answers) {
+    var height = 0.0;
+
+    for (var item in answers) {
+      height += item.length > 100
+          ? 64
+          : item.length > 50
+              ? 36
+              : item.length > 36
+                  ? 16
+                  : 0;
+      height += 60;
+    }
+
+    return height;
+  }
+
   final _answerNotifier = ValueNotifier<int>(-1);
 
   @override
   Widget build(BuildContext context) {
+    var _btnHeigth = 38.0;
+    var _questions = QuizProvider().getQuizQuestions();
+    _questions.shuffle();
+
+    var _question = _questions.first;
+    _question.answers.shuffle();
+
     return Padding(
       padding: hPadding,
       child: SingleChildScrollView(
@@ -44,7 +66,7 @@ class QuizTheoryScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 28),
                   Text(
-                    "Что такое инвестиционный портфель?",
+                    _question.question,
                     style: textStyle(16, textColor),
                   )
                 ],
@@ -53,11 +75,11 @@ class QuizTheoryScreen extends StatelessWidget {
             SizedBox(height: 32),
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: 120,
+              height: _calcListViewHeigth(_question.answers),
               child: ListView.builder(
                 shrinkWrap: true,
                 physics: ClampingScrollPhysics(),
-                itemCount: _answers.length,
+                itemCount: _question.answers.length,
                 itemBuilder: (BuildContext context, int i) =>
                     ValueListenableBuilder<int>(
                   valueListenable: _answerNotifier,
@@ -65,69 +87,150 @@ class QuizTheoryScreen extends StatelessWidget {
                     return Column(
                       children: [
                         number == i
-                            ? MaterialButton(
-                                minWidth: MediaQuery.of(context).size.width,
-                                height: 44,
-                                color: blue60,
-                                onPressed: () => _answerNotifier.value = i,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                        "lib/assets/checkmark.svg"),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      _answers[i],
+                            // Выбрано
+                            ? _question.answers[i].split(" ").length > 3
+                                ? Column(
+                                    children: [
+                                      MaterialButton(
+                                        minWidth:
+                                            MediaQuery.of(context).size.width,
+                                        height: _btnHeigth,
+                                        color: blue60,
+                                        onPressed: () =>
+                                            _answerNotifier.value = i,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                                "lib/assets/checkmark.svg"),
+                                            SizedBox(width: 10),
+                                            Text(
+                                              _answerPresentView(
+                                                      _question.answers[i])
+                                                  .replaceAll(',', ''),
+                                              style: textStyle(14, pureWhite,
+                                                  FontWeight.w500),
+                                            )
+                                          ],
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                bntRadius)),
+                                      ),
+                                      Text(
+                                          _question.answers[i].substring(
+                                              _answerPresentView(
+                                                          _question.answers[i])
+                                                      .length +
+                                                  1),
+                                          style: textStyle(14)),
+                                    ],
+                                  )
+                                : MaterialButton(
+                                    minWidth: MediaQuery.of(context).size.width,
+                                    height: _btnHeigth,
+                                    color: blue60,
+                                    onPressed: () => _answerNotifier.value = i,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(
+                                            "lib/assets/checkmark.svg"),
+                                        SizedBox(width: 10),
+                                        Text(
+                                          _question.answers[i],
+                                          style: textStyle(
+                                              14, pureWhite, FontWeight.w500),
+                                        )
+                                      ],
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(bntRadius)),
+                                  )
+                            // Не выбрано
+                            : _question.answers[i].split(" ").length > 3
+                                ? Column(
+                                    children: [
+                                      MaterialButton(
+                                        minWidth:
+                                            MediaQuery.of(context).size.width,
+                                        height: _btnHeigth,
+                                        onPressed: () =>
+                                            _answerNotifier.value = i,
+                                        child: Text(
+                                          _answerPresentView(
+                                                  _question.answers[i])
+                                              .replaceAll(',', ''),
+                                          style: textStyle(
+                                              14, grey70, FontWeight.w500),
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                bntRadius),
+                                            side: BorderSide(color: grey70)),
+                                      ),
+                                      Text(
+                                        _question.answers[i].substring(
+                                            _answerPresentView(
+                                                        _question.answers[i])
+                                                    .length +
+                                                1),
+                                        style: textStyle(14, textColor),
+                                      ),
+                                    ],
+                                  )
+                                : MaterialButton(
+                                    minWidth: MediaQuery.of(context).size.width,
+                                    height: _btnHeigth,
+                                    onPressed: () => _answerNotifier.value = i,
+                                    child: Text(
+                                      _question.answers[i],
                                       style: textStyle(
-                                          14, pureWhite, FontWeight.w500),
-                                    )
-                                  ],
-                                ),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(bntRadius)),
-                              )
-                            : MaterialButton(
-                                minWidth: MediaQuery.of(context).size.width,
-                                height: 44,
-                                onPressed: () => _answerNotifier.value = i,
-                                child: Text(
-                                  _answers[i],
-                                  style: textStyle(14, grey70, FontWeight.w500),
-                                ),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(bntRadius),
-                                    side: BorderSide(color: grey70)),
-                              ),
-                        SizedBox(height: 8),
+                                          14, grey70, FontWeight.w500),
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(bntRadius),
+                                        side: BorderSide(color: grey70)),
+                                  ),
                       ],
                     );
                   },
                 ),
               ),
             ),
-            SizedBox(height: 42),
+            SizedBox(height: 24),
             MaterialButton(
               minWidth: MediaQuery.of(context).size.width,
               height: 38,
               color: green40,
               onPressed: () {
                 var val = _answerNotifier.value;
-                if (val == 0) {
+                if (_question.trueAnswer.any(
+                    (element) => element.answer == _question.answers[val])) {
                   waterNotifier.value = (waterNotifier.value * 1.1).round();
                   Navigator.pop(context);
                   showDialog(
                       context: context,
                       builder: (_) => AlertDialog(
-                            content: QuizCorrectScreen(),
+                            content: QuizCorrectScreen(
+                              question: _question,
+                              answerIndex: val,
+                            ),
                           ));
-                } else if (val == 1) {
+                } else {
+                  print(_question.question);
                   Navigator.pop(context);
                   showDialog(
                       context: context,
                       builder: (_) => AlertDialog(
-                            content: QuizWrongScreen(),
+                            content: QuizWrongScreen(
+                              question: _question,
+                              answerIndex: val,
+                            ),
                           ));
                 }
               },
