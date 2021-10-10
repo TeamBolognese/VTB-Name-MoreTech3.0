@@ -1,18 +1,17 @@
 # API Backend
-API is up and working on: https://vtbmt3.teambolognese.ru/.
+API сервер поднят и работает по адресу: https://vtbmt3.teambolognese.ru/.
 
-## [app.py](app.py) - bottle web app with sqlite connection
-### Endpoints:<br>
+## [app.py](app.py) - веб-сервер на bottle (API)
+### Методы:<br>
 <b>/api/hello</b> - Hello world [(Link)](https://vtbmt3.teambolognese.ru/api/hello)
-<br><b>/login</b> - Authenticate form [(Link)](https://vtbmt3.teambolognese.ru/login)
-<br><b>/register</b> - Registration form [(Link)](https://vtbmt3.teambolognese.ru/register)
-<br><b>/api/get/users</b> - Get users table [(Link)](https://vtbmt3.teambolognese.ru/api/get/users)
-<br><b>/api/token_check/&lt;token&gt;</b> - Token checker [(Example)](https://vtbmt3.teambolognese.ru/api/token_check/3fdabf52ca2e83fc72816877bc4f197d635a1477ea56b213ae403c644cd133aa)
-<br><b>/change_&lt;name&gt;</b> - Form for update user money/water/age/tree_id/risk_type_id [(Example)](https://vtbmt3.teambolognese.ru/change_money)
-<br><b>/api/login</b> and <b>/api/register</b> - Login/registration API (POST)
+<br><b>/login</b> - Форма авторизации [(Link)](https://vtbmt3.teambolognese.ru/login)
+<br><b>/register</b> - Форма регистрации [(Link)](https://vtbmt3.teambolognese.ru/register)
+<br><b>/api/get/users</b> - Таблица пользователей [(Link)](https://vtbmt3.teambolognese.ru/api/get/users)
+<br><b>/api/token_check/&lt;token&gt;</b> - Проверка токена [(Example)](https://vtbmt3.teambolognese.ru/api/token_check/3fdabf52ca2e83fc72816877bc4f197d635a1477ea56b213ae403c644cd133aa)
+<br><b>/change_&lt;name&gt;</b> - Форма обновления money/water/age/tree_id/risk_type_id пользователя [(Example)](https://vtbmt3.teambolognese.ru/change_money)
 
-## [db.db](db.db) - sqlite3 database
-### Structure:
+## [db.db](db.db) - sqlite3 база данных
+### Структура:
 
 ![image](https://user-images.githubusercontent.com/47640060/136656790-da729cfd-ea7c-401c-96d8-902b57d54c74.png)
 
