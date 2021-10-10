@@ -3,7 +3,6 @@ API сервер поднят и работает по адресу: https://vtb
 
 ## [app.py](app.py) - веб-сервер на bottle (API)
 ### Методы:<br>
-<b>/api/hello</b> - Hello world [(Link)](https://vtbmt3.teambolognese.ru/api/hello)
 <br><b>/login</b> - Форма авторизации [(Link)](https://vtbmt3.teambolognese.ru/login)
 <br><b>/register</b> - Форма регистрации [(Link)](https://vtbmt3.teambolognese.ru/register)
 <br><b>/api/get/users</b> - Таблица пользователей [(Link)](https://vtbmt3.teambolognese.ru/api/get/users)
