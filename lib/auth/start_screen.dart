@@ -19,6 +19,7 @@ class StartScreen extends StatelessWidget {
     const _height = 38.0;
 
     return Scaffold(
+      backgroundColor: pureWhite,
       body: Padding(
         padding: hPadding,
         child: Center(

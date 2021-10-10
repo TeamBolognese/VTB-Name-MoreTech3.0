@@ -1,11 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:moretech_app/constants.dart';
 import 'package:moretech_app/survey/components/question_model.dart';
 import 'package:moretech_app/survey/survey_complete_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:moretech_app/user_repository.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class SurveyQuestionsScreen extends StatelessWidget {
@@ -236,47 +234,31 @@ class SurveyQuestionsScreen extends StatelessWidget {
                             return;
                           }
 
+                          if (obj.number == 1) {
+                            obj.userAnswer = _nameController.text;
+                          } else {
+                            obj.userAnswer =
+                                obj.answers![_answerNotifier.value];
+                          }
+
                           if (_questions.last.number == obj.number) {
                             _showSurveyCompletePage(context);
                             var user = {
                               "name": _questions[0].userAnswer,
                               "sex": _questions[1].userAnswer,
                               "age": _questions[2].userAnswer,
-                              "crazy": _questions[3].userAnswer,
+                              "crazy_status": _questions[3].userAnswer,
                               "target": _questions[4].userAnswer,
+                              "balance": 0,
+                              "water": 0,
+                              "heart": 0,
+                              "sun": 0,
                             };
 
-                            var count = user["sex"] == "Мужской" ? 0.32 : 0.16;
-                            count += user["age"] == "До 25"
-                                ? 0.48
-                                : user["age"] == "От 26 до 55"
-                                    ? 0.32
-                                    : 0.16;
-                            count += user["crazy"] == "Да"
-                                ? 1.02
-                                : user["crazy"] == "Не уверен"
-                                    ? 0.68
-                                    : 0.34;
-                            count += user["target"] == "Всего и сразу"
-                                ? 1.02
-                                : user["target"] == "Как пойдет"
-                                    ? 0.68
-                                    : 0.34;
-
-                            user["count"] = count.toString();
-
-                            var prefs = await SharedPreferences.getInstance();
-                            prefs.setString("user", jsonEncode(user));
+                            UserRepository().saveUser(user);
                           } else {
                             var v = _questions.indexOf(obj);
                             _questionNotifier.value = _questions[v + 1];
-                          }
-
-                          if (obj.number == 1) {
-                            obj.userAnswer = _nameController.text;
-                          } else {
-                            obj.userAnswer =
-                                obj.answers![_answerNotifier.value];
                           }
 
                           _answerNotifier.value = -1;

@@ -35,6 +35,7 @@ class NavigationBarScreen extends StatelessWidget {
     return ValueListenableBuilder<int>(
       valueListenable: _selectedIndexNotifier,
       builder: (_, val, __) => Scaffold(
+        backgroundColor: pureWhite,
         body: _screens.elementAt(val),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: val,
