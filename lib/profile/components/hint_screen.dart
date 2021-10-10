@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:moretech_app/constants.dart';
+import 'package:moretech_app/profile/components/quiz_notif_theory_screen.dart';
 
 class HintScreen extends StatelessWidget {
-  const HintScreen({Key? key}) : super(key: key);
+  const HintScreen(
+      {Key? key,
+      required this.waterNotifier,
+      required this.careNotifier,
+      required this.sunNotifier})
+      : super(key: key);
+
+  final ValueNotifier<int> waterNotifier;
+  final ValueNotifier<int> careNotifier;
+  final ValueNotifier<int> sunNotifier;
 
   @override
   Widget build(BuildContext context) {
@@ -17,19 +27,19 @@ class HintScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  "Угроза",
+                  "Внимание",
                   style: textStyle(18, Colors.red, FontWeight.w500),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 4),
                 Text(
-                  "сорняки",
+                  "Нужно заняться цветком",
                   style: textStyle(14, textColor, FontWeight.w500),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 28),
                 Text(
-                  "Небольшое описание, почему сорняки вредны, пояснение на языке инвестиций, а также способы борьбы с сорняками (в мире инвестиций - и как мы это сделаем метафорически в самой игре)",
+                  "Настало время позаботиться о твоём цветке. У меня есть для тебя предложение, нужно услышать твоё мнение...",
                   style: textStyle(16, textColor),
                 )
               ],
@@ -39,7 +49,18 @@ class HintScreen extends StatelessWidget {
               minWidth: MediaQuery.of(context).size.width,
               height: 38,
               color: green40,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+                showDialog(
+                    context: context,
+                    builder: (_) => AlertDialog(
+                          content: QuizNotifTheoryScreen(
+                            waterNotifier: waterNotifier,
+                            careNotifier: careNotifier,
+                            sunNotifier: sunNotifier,
+                          ),
+                        ));
+              },
               child: Text(
                 "Перейти к действиям!",
                 style: textStyle(14, pureWhite),

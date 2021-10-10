@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:moretech_app/constants.dart';
-import 'package:moretech_app/profile/components/quiz/components/quiz_question_model.dart';
+import 'package:moretech_app/profile/components/components/quiz_provider.dart';
+import 'package:moretech_app/profile/components/quiz_correct_screen.dart';
+import 'package:moretech_app/profile/components/quiz_wrong_screen.dart';
+import 'package:moretech_app/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class QuizWrongScreen extends StatelessWidget {
-  QuizWrongScreen({Key? key, required this.question, required this.answerIndex})
-      : super(key: key);
+class QuizTheoryScreen extends StatelessWidget {
+  QuizTheoryScreen({Key? key, required this.waterNotifier}) : super(key: key);
 
-  final QuizQuestion question;
-  final int answerIndex;
-
-  final _answerNotifier = ValueNotifier<int>(0);
+  final ValueNotifier<int> waterNotifier;
 
   String _answerPresentView(String str) {
     var split = str.split(" ");
@@ -38,19 +38,23 @@ class QuizWrongScreen extends StatelessWidget {
     return height;
   }
 
+  final _answerNotifier = ValueNotifier<int>(-1);
+
   @override
   Widget build(BuildContext context) {
-    _answerNotifier.value = answerIndex;
     var _btnHeigth = 38.0;
+    var _questions = QuizProvider().getQuizQuestions();
+    _questions.shuffle();
+
+    var _question = _questions.first;
+    _question.answers.shuffle();
 
     return Padding(
       padding: hPadding,
       child: SingleChildScrollView(
-        physics: ClampingScrollPhysics(),
         child: Column(
           children: [
-            Image.asset(
-                "lib/assets/farmer_speech/farmer-speech-wrong-answer.png"),
+            Image.asset("lib/assets/farmer_speech/farmer-speech-quiz.png"),
             SizedBox(height: 24),
             Padding(
               padding: hPadding12,
@@ -58,13 +62,13 @@ class QuizWrongScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    "Верно",
-                    style: textStyle(18, Colors.red, FontWeight.w500),
+                    "Вопрос",
+                    style: textStyle(18, green40, FontWeight.w500),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 28),
                   Text(
-                    question.question,
+                    _question.question,
                     style: textStyle(16, textColor),
                   )
                 ],
@@ -73,11 +77,11 @@ class QuizWrongScreen extends StatelessWidget {
             SizedBox(height: 32),
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: _calcListViewHeigth(question.answers),
+              height: _calcListViewHeigth(_question.answers),
               child: ListView.builder(
                 shrinkWrap: true,
                 physics: ClampingScrollPhysics(),
-                itemCount: question.answers.length,
+                itemCount: _question.answers.length,
                 itemBuilder: (BuildContext context, int i) =>
                     ValueListenableBuilder<int>(
                   valueListenable: _answerNotifier,
@@ -86,14 +90,14 @@ class QuizWrongScreen extends StatelessWidget {
                       children: [
                         number == i
                             // Выбрано
-                            ? question.answers[i].split(" ").length > 3
+                            ? _question.answers[i].split(" ").length > 3
                                 ? Column(
                                     children: [
                                       MaterialButton(
                                         minWidth:
                                             MediaQuery.of(context).size.width,
                                         height: _btnHeigth,
-                                        color: Colors.red,
+                                        color: blue60,
                                         onPressed: () =>
                                             _answerNotifier.value = i,
                                         child: Row(
@@ -105,7 +109,7 @@ class QuizWrongScreen extends StatelessWidget {
                                             SizedBox(width: 10),
                                             Text(
                                               _answerPresentView(
-                                                      question.answers[i])
+                                                      _question.answers[i])
                                                   .replaceAll(',', ''),
                                               style: textStyle(14, pureWhite,
                                                   FontWeight.w500),
@@ -117,9 +121,9 @@ class QuizWrongScreen extends StatelessWidget {
                                                 bntRadius)),
                                       ),
                                       Text(
-                                          question.answers[i].substring(
+                                          _question.answers[i].substring(
                                               _answerPresentView(
-                                                          question.answers[i])
+                                                          _question.answers[i])
                                                       .length +
                                                   1),
                                           style: textStyle(14)),
@@ -128,7 +132,7 @@ class QuizWrongScreen extends StatelessWidget {
                                 : MaterialButton(
                                     minWidth: MediaQuery.of(context).size.width,
                                     height: _btnHeigth,
-                                    color: Colors.red,
+                                    color: blue60,
                                     onPressed: () => _answerNotifier.value = i,
                                     child: Row(
                                       mainAxisAlignment:
@@ -138,7 +142,7 @@ class QuizWrongScreen extends StatelessWidget {
                                             "lib/assets/checkmark.svg"),
                                         SizedBox(width: 10),
                                         Text(
-                                          question.answers[i],
+                                          _question.answers[i],
                                           style: textStyle(
                                               14, pureWhite, FontWeight.w500),
                                         )
@@ -149,7 +153,7 @@ class QuizWrongScreen extends StatelessWidget {
                                             BorderRadius.circular(bntRadius)),
                                   )
                             // Не выбрано
-                            : question.answers[i].split(" ").length > 3
+                            : _question.answers[i].split(" ").length > 3
                                 ? Column(
                                     children: [
                                       MaterialButton(
@@ -160,7 +164,7 @@ class QuizWrongScreen extends StatelessWidget {
                                             _answerNotifier.value = i,
                                         child: Text(
                                           _answerPresentView(
-                                                  question.answers[i])
+                                                  _question.answers[i])
                                               .replaceAll(',', ''),
                                           style: textStyle(
                                               14, grey70, FontWeight.w500),
@@ -171,9 +175,9 @@ class QuizWrongScreen extends StatelessWidget {
                                             side: BorderSide(color: grey70)),
                                       ),
                                       Text(
-                                        question.answers[i].substring(
+                                        _question.answers[i].substring(
                                             _answerPresentView(
-                                                        question.answers[i])
+                                                        _question.answers[i])
                                                     .length +
                                                 1),
                                         style: textStyle(14, textColor),
@@ -185,7 +189,7 @@ class QuizWrongScreen extends StatelessWidget {
                                     height: _btnHeigth,
                                     onPressed: () => _answerNotifier.value = i,
                                     child: Text(
-                                      question.answers[i],
+                                      _question.answers[i],
                                       style: textStyle(
                                           14, grey70, FontWeight.w500),
                                     ),
@@ -200,24 +204,46 @@ class QuizWrongScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 42),
-            Text(
-              "Пояснение:",
-              style: textStyle(16, textColor, FontWeight.w500),
-            ),
-            SizedBox(height: 16),
-            Text(
-              question.exp(),
-              style: textStyle(16, textColor),
-            ),
-            SizedBox(height: 42),
+            SizedBox(height: 24),
             MaterialButton(
               minWidth: MediaQuery.of(context).size.width,
               height: 38,
               color: green40,
-              onPressed: () => Navigator.pop(context),
+              onPressed: () async {
+                var val = _answerNotifier.value;
+                if (_question.trueAnswer.any(
+                    (element) => element.answer == _question.answers[val])) {
+                  var prefs = await SharedPreferences.getInstance();
+                  var str = prefs.getString("user");
+                  var user = User.fromRawJson(str!);
+                  user.flower!.water = (user.flower!.water! * 1.1).round();
+                  waterNotifier.value = user.flower!.water!;
+                  await prefs.setString("user", user.toRawJson());
+
+                  Navigator.pop(context);
+                  showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                            content: QuizCorrectScreen(
+                              question: _question,
+                              answerIndex: val,
+                            ),
+                          ));
+                } else {
+                  print(_question.question);
+                  Navigator.pop(context);
+                  showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                            content: QuizWrongScreen(
+                              question: _question,
+                              answerIndex: val,
+                            ),
+                          ));
+                }
+              },
               child: Text(
-                "Перейти в профиль",
+                "Ответить",
                 style: textStyle(14, pureWhite),
               ),
               shape: RoundedRectangleBorder(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:moretech_app/constants.dart';
-import 'package:moretech_app/profile/components/quiz/components/quiz_question_model.dart';
+import 'package:moretech_app/profile/components/components/quiz_question_model.dart';
 
 class QuizCorrectScreen extends StatelessWidget {
   QuizCorrectScreen(

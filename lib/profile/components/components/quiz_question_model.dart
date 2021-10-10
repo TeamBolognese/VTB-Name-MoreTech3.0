@@ -1,4 +1,4 @@
-import 'package:moretech_app/profile/components/quiz/components/quiz_true_answer_model.dart';
+import 'package:moretech_app/profile/components/components/quiz_true_answer_model.dart';
 
 class QuizQuestion {
   final String question;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:moretech_app/constants.dart';
-import 'package:moretech_app/profile/components/hint/hint_screen.dart';
-import 'package:moretech_app/profile/components/quiz/quiz_theory_screen.dart';
+import 'package:moretech_app/profile/components/hint_screen.dart';
+import 'package:moretech_app/profile/components/quiz_theory_screen.dart';
 import 'package:moretech_app/user_model.dart';
 import 'package:moretech_app/user_repository.dart';
 
@@ -319,8 +319,12 @@ class ProfilePage extends StatelessWidget {
                         child: MaterialButton(
                           minWidth: MediaQuery.of(context).size.width * 0.5,
                           height: 44,
-                          onPressed: () =>
-                              _showCustomDialog(context, child: HintScreen()),
+                          onPressed: () => _showCustomDialog(context,
+                              child: HintScreen(
+                                waterNotifier: _waterNotifier,
+                                careNotifier: _careNotifier,
+                                sunNotifier: _sunNotifier,
+                              )),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
