@@ -4,6 +4,8 @@ import 'package:moretech_app/constants.dart';
 import 'package:moretech_app/profile/components/quiz/components/quiz_provider.dart';
 import 'package:moretech_app/profile/components/quiz/quiz_correct_screen.dart';
 import 'package:moretech_app/profile/components/quiz/quiz_wrong_screen.dart';
+import 'package:moretech_app/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class QuizTheoryScreen extends StatelessWidget {
   QuizTheoryScreen({Key? key, required this.waterNotifier}) : super(key: key);
@@ -207,11 +209,17 @@ class QuizTheoryScreen extends StatelessWidget {
               minWidth: MediaQuery.of(context).size.width,
               height: 38,
               color: green40,
-              onPressed: () {
+              onPressed: () async {
                 var val = _answerNotifier.value;
                 if (_question.trueAnswer.any(
                     (element) => element.answer == _question.answers[val])) {
-                  waterNotifier.value = (waterNotifier.value * 1.1).round();
+                  var prefs = await SharedPreferences.getInstance();
+                  var str = prefs.getString("user");
+                  var user = User.fromRawJson(str!);
+                  user.flower!.water = (user.flower!.water! * 1.1).round();
+                  waterNotifier.value = user.flower!.water!;
+                  await prefs.setString("user", user.toRawJson());
+
                   Navigator.pop(context);
                   showDialog(
                       context: context,
