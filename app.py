@@ -30,25 +30,29 @@ def show_index():
     '''
     response.add_header('Access-Control-Allow-Origin', '*')
     return '''
-<head><title>Hack API</title></head><h2>Hackathon API</h2>
-<h3><br>Endpoints:</h3>
+<head><title>Hack API</title></head>
+<style>
+    p {
+    font-family: Verdana, Arial, Helvetica, sans-serif; 
+    font-size: 13pt;
+    }
+</style>
+<h1>Hackathon API</h1>
+<h2><p>Endpoints:</h2> \<token\> \\<token\\>
 <b>/api/hello</b> - Hello world (<a href=\"https://vtbmt3.teambolognese.ru/api/hello\">Link</a>)
-<br><b>/login</b> - Форма авторизации (<a href=\"https://vtbmt3.teambolognese.ru/login\">Link</a>)
-<br><b>/register</b> - Форма регистрации (<a href=\"https://vtbmt3.teambolognese.ru/register\">Link</a>)
-<br><b>/api/get/users</b> - Получение таблицы пользователей из БД (<a href=\"https://vtbmt3.teambolognese.ru/api/get/users\">Link</a>)
-<br><b>/api/token_check/&lt;token&gt;</b> - Проверка токена (возвращает юзернейм владельца токена или False)
-<br><b>/api/login</b> and <b>/api/register</b> - Логин/регистрация API (POST)
-<br><br><br><h3>Структура БД:</h3>
-TABLE types_tree (type_tree_id INTEGER PRIMARY KEY, name TEXT);
+<br><b>/login</b> - Authenticate form (<a href=\"https://vtbmt3.teambolognese.ru/login\">Link</a>)
+<br><b>/register</b> - Registration form (<a href=\"https://vtbmt3.teambolognese.ru/register\">Link</a>)
+<br><b>/api/get/users</b> - Get users table (<a href=\"https://vtbmt3.teambolognese.ru/api/get/users\">Link</a>)
+<br><b>/api/login</b> and <b>/api/register</b> - Login/registration API (POST)
+</p><h2>Database structure:</h2>
+<p>CREATE TABLE types_tree (type_tree_id INTEGER PRIMARY KEY, name TEXT);
 <br>
-TABLE tree (tree_id INTEGER PRIMARY KEY, health_level INTEGER, type_tree_id INTEGER, FOREIGN KEY(type_tree_id) REFERENCES types_tree(type_tree_id));</b>
+CREATE TABLE tree (tree_id INTEGER PRIMARY KEY, health_level INTEGER, type_tree_id INTEGER, FOREIGN KEY(type_tree_id) REFERENCES types_tree(type_tree_id));</b>
 <br>
-TABLE types_risk (type_risk_id INTEGER PRIMARY KEY, name TEXT);
+CREATE TABLE types_risk (type_risk_id INTEGER PRIMARY KEY, name TEXT);
 <br>
-TABLE users (user_id INTEGER PRIMARY KEY, username TEXT NOT NULL UNIQUE, password TEXT NOT NULL, gender INTEGER, age INTEGER, fullname TEXT, type_risk_id INTEGER, tree_id INTEGER, water INTEGER, money INTEGER, FOREIGN KEY(tree_id) REFERENCES tree(tree_id), FOREIGN KEY(type_risk_id) REFERENCES types_risk(type_risk_id));
-<br>
-TABLE tokens (token_id INTEGER PRIMARY KEY, user_id INTEGER NOT NULL, token TEXT NOT NULL UNIQUE, FOREIGN KEY(user_id) REFERENCES users(user_id));
-'''
+CREATE TABLE users (user_id INTEGER PRIMARY KEY, username TEXT NOT NULL UNIQUE, password TEXT NOT NULL, gender INTEGER, age INTEGER, fullname TEXT, type_risk_id INTEGER, tree_id INTEGER, water INTEGER, money INTEGER, FOREIGN KEY(tree_id) REFERENCES tree(tree_id), FOREIGN KEY(type_risk_id) REFERENCES types_risk(type_risk_id));
+</p>'''
 
 @app.route('/api/hello')
 def api():
@@ -116,15 +120,32 @@ def users():
 
 @app.route("/api/token_check/<text>")
 def token_check(text):
-    if(text.isalnum()):
-        # Валидация ввода
-        # TODO: переписать на prepared statements
-        resp = cursor.execute("SELECT user_id FROM tokens WHERE token='" +  text + "';").fetchall()
-        if(len(resp) == 1):
-            username = cursor.execute("SELECT username FROM users WHERE user_id=" + str(resp[0][0]) + ";").fetchall()[0][0]
-            return "{\"result\":\"True\",\"username\":\"" + username + "\"}"
+    resp = cursor.execute("SELECT user_id FROM tokens WHERE token='" +  text + "';").fetchall()
+    if(len(resp) == 1):
+        username = cursor.execute("SELECT username FROM users WHERE user_id=" + str(resp[0][0]) + ";").fetchall()[0][0]
+        return "{\"result\":\"True\",\"username\":\"" + username + "\"}"
+    else:
+        return "{\"result\":\"False\"}"
+
+@app.route("/change_<name>")
+def change(name):
+    if(name in ['gender','age','type_risk_id','tree_id','water','money']):
+        return '<form action="/api/change_' + name + '" method="post">Username: <input name="username" type="text"/>New ' + name + ' val: <input name="new_value" type="text"/><input value="Change" type="submit"/></form>'
+    else:
+        return 'Incorrect name for change value'
+
+@app.route('/api/change_<name>', method='POST')
+def do_change(name):
+    username = request.forms.get('username')
+    new_value = request.forms.get('new_value')
+    if((username+new_value).isalnum()):
+        # Валидация, поменять тоже
+        if(name in ['gender','age','type_risk_id','tree_id','water','money']):
+            resp = cursor.execute("UPDATE users SET " + name + " = " + new_value + " WHERE username = '" + username + "';")
+            connect.commit()
+            return "{\"result\":\"Done\"}"
         else:
-            return "{\"result\":\"False\"}"
+            return 'Incorrect name for change value'
     else:
         return "{\"result\":\"bad_characters\"}"
 
@@ -133,3 +154,4 @@ if __name__ == '__main__':
         host='0.0.0.0',
         port=8080,
         debug=True)
+
