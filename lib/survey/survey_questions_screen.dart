@@ -255,6 +255,25 @@ class SurveyQuestionsScreen extends StatelessWidget {
                               "sun": 0,
                             };
 
+                            var count = user["sex"] == "Мужской" ? 0.32 : 0.16;
+                            count += user["age"] == "До 25"
+                                ? 0.48
+                                : user["age"] == "От 26 до 55"
+                                    ? 0.32
+                                    : 0.16;
+                            count += user["crazy_status"] == "Да"
+                                ? 1.02
+                                : user["crazy_status"] == "Не уверен"
+                                    ? 0.68
+                                    : 0.34;
+                            count += user["target"] == "Всего и сразу"
+                                ? 1.02
+                                : user["target"] == "Как пойдет"
+                                    ? 0.68
+                                    : 0.34;
+
+                            user["count"] = count;
+
                             UserRepository().saveUser(user);
                           } else {
                             var v = _questions.indexOf(obj);

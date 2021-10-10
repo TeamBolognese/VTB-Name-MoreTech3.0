@@ -1,29 +1,34 @@
 import 'dart:convert';
 
+import 'package:moretech_app/flower_model.dart';
 import 'package:moretech_app/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserRepository {
+  Future<User> createUser(Map<String, dynamic> json) async {
+    var user = User.fromJson(json);
+
+    Map<String, dynamic> flower = {
+      "name": user.flowerName(),
+    };
+    if (flower["name"] == "Бонсай") {
+      flower["water"] = 30;
+      flower["care"] = 60;
+      flower["sun"] = 45;
+    } else if (flower["name"] == "Бегония") {
+      flower["water"] = 50;
+      flower["care"] = 35;
+      flower["sun"] = 35;
+    } else if (flower["name"] == "Папоротник") {
+      flower["water"] = 75;
+      flower["care"] = 15;
+      flower["sun"] = 30;
+    }
+    user.flower = Flower.fromJson(flower);
+    return user;
+  }
+
   Future<void> saveUser(Map<String, dynamic> user) async {
-    var count = user["sex"] == "Мужской" ? 0.32 : 0.16;
-    count += user["age"] == "До 25"
-        ? 0.48
-        : user["age"] == "От 26 до 55"
-            ? 0.32
-            : 0.16;
-    count += user["crazy_status"] == "Да"
-        ? 1.02
-        : user["crazy_status"] == "Не уверен"
-            ? 0.68
-            : 0.34;
-    count += user["target"] == "Всего и сразу"
-        ? 1.02
-        : user["target"] == "Как пойдет"
-            ? 0.68
-            : 0.34;
-
-    user["count"] = count;
-
     var prefs = await SharedPreferences.getInstance();
     prefs.setString("user", jsonEncode(user));
   }

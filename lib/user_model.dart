@@ -1,16 +1,16 @@
 import 'dart:convert';
 
+import 'package:moretech_app/flower_model.dart';
+
 class User {
   String name;
   String sex;
   String age;
   String crazyStatus;
   String target;
-  double? count;
   int? balance = 0;
-  int? water = 0;
-  int? heart = 0;
-  int? sun = 0;
+  double? count;
+  Flower? flower;
 
   User({
     required this.name,
@@ -18,35 +18,39 @@ class User {
     required this.age,
     required this.crazyStatus,
     required this.target,
-    this.count,
     this.balance,
-    this.water,
-    this.heart,
-    this.sun,
+    this.count,
+    this.flower,
   });
 
   String flowerName() {
     return count! >= 2.8
-        ? "Роза"
+        ? "Бонсай"
         : count! >= 2.3
-            ? "Тюльпан"
-            : "Ромашка";
+            ? "Бегония"
+            : "Папоротник";
+  }
+
+  String flowerEnglishName() {
+    return count! >= 2.8
+        ? "bonsai"
+        : count! >= 2.3
+            ? "begonia"
+            : "fern";
   }
 
   factory User.fromRawJson(String str) => User.fromJson(jsonDecode(str));
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        name: json["name"],
-        sex: json["sex"],
-        age: json["age"],
-        crazyStatus: json["crazy_status"],
-        target: json["target"],
-        count: json["count"],
-        balance: json["balance"],
-        water: json["water"],
-        heart: json["heart"],
-        sun: json["sun"],
-      );
+      name: json["name"],
+      sex: json["sex"],
+      age: json["age"],
+      crazyStatus: json["crazy_status"],
+      target: json["target"],
+      balance: json["balance"],
+      count: json["count"],
+      flower:
+          json["flower"] != null ? Flower.fromRawJson(json["flower"]) : null);
 
   String toRawJson() => jsonEncode(toJson());
 
@@ -56,10 +60,8 @@ class User {
         "age": age,
         "crazy_status": crazyStatus,
         "target": target,
-        "count": count,
         "balance": balance,
-        "water": water,
-        "heart": heart,
-        "sun": sun,
+        "count": count,
+        "flower": flower != null ? flower!.toRawJson() : null,
       };
 }

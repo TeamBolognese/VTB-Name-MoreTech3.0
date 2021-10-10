@@ -34,3 +34,7 @@ flutter:
     - lib/assets/farmer/
     - lib/assets/farmer_speech/
     - lib/assets/icons/
+    - lib/assets/plants/
+    - lib/assets/plants/begonia/
+    - lib/assets/plants/bonsai/
+    - lib/assets/plants/fern/

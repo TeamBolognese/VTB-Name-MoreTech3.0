@@ -32,15 +32,18 @@ class SurveyPrizeScreen extends StatelessWidget {
             future: UserRepository().getUserData(),
             builder: (_, snapshot) {
               if (!snapshot.hasData) {
+                print("Survey prize screen fail");
                 return Text("Что-то пошло не так! ${snapshot.data}");
               }
 
-              var name = snapshot.data!.flowerName();
+              var user = snapshot.data!;
+              var flower = user.flower!;
+              var name = flower.name;
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SvgPicture.asset(
-                    "lib/assets/plant.svg",
+                    "lib/assets/plants/${flower.defaultPath()}",
                     width: 160,
                     height: 175,
                   ),
@@ -70,7 +73,7 @@ class SurveyPrizeScreen extends StatelessWidget {
                   Padding(
                     padding: hPadding12,
                     child: Text(
-                      kSurveyPrize,
+                      flower.description(),
                       style: textStyle(16, textColor),
                       textAlign: TextAlign.center,
                     ),

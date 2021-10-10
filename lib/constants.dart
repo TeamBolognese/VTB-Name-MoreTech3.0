@@ -19,6 +19,7 @@ const textColor = Color(0xFF696C73);
 const bntRadius = 4.0;
 
 const hPadding = EdgeInsets.symmetric(horizontal: 16);
+const hPadding6 = EdgeInsets.symmetric(horizontal: 6);
 const hPadding12 = EdgeInsets.symmetric(horizontal: 12);
 const hPadding28 = EdgeInsets.symmetric(horizontal: 28);
 

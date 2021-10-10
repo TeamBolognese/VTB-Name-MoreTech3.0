@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:moretech_app/constants.dart';
-import 'package:moretech_app/profile/components/quiz_correct_screen.dart';
-import 'package:moretech_app/profile/components/quiz_wrong_screen.dart';
+import 'package:moretech_app/profile/components/quiz/quiz_correct_screen.dart';
+import 'package:moretech_app/profile/components/quiz/quiz_wrong_screen.dart';
 
 class QuizTheoryScreen extends StatelessWidget {
   QuizTheoryScreen({Key? key, required this.waterNotifier}) : super(key: key);

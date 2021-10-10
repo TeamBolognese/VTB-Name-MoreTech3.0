@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:moretech_app/constants.dart';
-import 'package:moretech_app/profile/components/quiz_theory_screen.dart';
+import 'package:moretech_app/profile/components/hint/hint_screen.dart';
+import 'package:moretech_app/profile/components/quiz/quiz_theory_screen.dart';
 import 'package:moretech_app/user_model.dart';
 import 'package:moretech_app/user_repository.dart';
 
@@ -17,7 +18,7 @@ class ProfilePage extends StatelessWidget {
   }
 
   final _waterNotifier = ValueNotifier(0);
-  final _heartNotifier = ValueNotifier(0);
+  final _careNotifier = ValueNotifier(0);
   final _sunNotifier = ValueNotifier(0);
 
   @override
@@ -36,9 +37,9 @@ class ProfilePage extends StatelessWidget {
             }
 
             var user = snapshot.data;
-            _waterNotifier.value = user!.water!;
-            _heartNotifier.value = user.heart!;
-            _sunNotifier.value = user.sun!;
+            _waterNotifier.value = user!.flower!.water!;
+            _careNotifier.value = user.flower!.care!;
+            _sunNotifier.value = user.flower!.sun!;
             return Column(
               children: [
                 Padding(
@@ -180,7 +181,7 @@ class ProfilePage extends StatelessWidget {
                                     Row(
                                       children: [
                                         Image.asset(
-                                          "lib/assets/icons/ico_ heart.jpg",
+                                          "lib/assets/icons/ico_ care.jpg",
                                           width: 16,
                                         ),
                                         SizedBox(width: 6),
@@ -191,7 +192,7 @@ class ProfilePage extends StatelessWidget {
                                     ),
                                     SizedBox(height: 16),
                                     ValueListenableBuilder<int>(
-                                      valueListenable: _heartNotifier,
+                                      valueListenable: _careNotifier,
                                       builder: (_, val, __) => RichText(
                                         textAlign: TextAlign.center,
                                         text: TextSpan(
@@ -267,23 +268,11 @@ class ProfilePage extends StatelessWidget {
                       Text(user.flowerName(),
                           style: textStyle(18, textColor, FontWeight.w500)),
                       SizedBox(height: 32),
-                      SvgPicture.asset("lib/assets/img_fern_grown.svg"),
-                      SizedBox(height: 24),
-                      RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(children: [
-                          TextSpan(
-                              text: "Размер: ",
-                              style: textStyle(16, grey70, FontWeight.w700)),
-                          TextSpan(text: "42 см", style: textStyle(16, grey70)),
-                        ]),
-                      ),
-                      SizedBox(height: 12),
-                      Text("+ 10 % / нед",
-                          style: textStyle(16, green40, FontWeight.w500)),
+                      SvgPicture.asset(
+                          "lib/assets/plants/${user.flowerEnglishName()}/${user.flowerEnglishName()}-S-high-health.svg"),
                       SizedBox(height: 30),
                       SizedBox(
-                        width: _width * 0.5,
+                        width: _width * 0.55,
                         child: Column(
                           children: [
                             Row(
@@ -330,7 +319,8 @@ class ProfilePage extends StatelessWidget {
                         child: MaterialButton(
                           minWidth: MediaQuery.of(context).size.width * 0.5,
                           height: 44,
-                          onPressed: () {},
+                          onPressed: () =>
+                              _showCustomDialog(context, child: HintScreen()),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

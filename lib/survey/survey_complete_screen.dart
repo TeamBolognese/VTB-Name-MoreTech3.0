@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:moretech_app/constants.dart';
 import 'package:moretech_app/survey/survey_prize_screen.dart';
+import 'package:moretech_app/user_repository.dart';
 
 class SurveyCompleteScreen extends StatelessWidget {
   const SurveyCompleteScreen({Key? key}) : super(key: key);
 
-  void _showSurveyPrizePage(BuildContext context) {
+  Future<void> _showSurveyPrizePage(BuildContext context) async {
+    var old = await UserRepository().getUserData();
+    var user = await UserRepository().createUser(old!.toJson());
+    await UserRepository().saveUser(user.toJson());
+
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => SurveyPrizeScreen()));
   }
