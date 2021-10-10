@@ -87,7 +87,7 @@ class SurveyQuestionsScreen extends StatelessWidget {
                         ),
                 ),
               ),
-              SizedBox(height: 48),
+              SizedBox(height: 24),
               Padding(
                 padding: hPadding,
                 child: Center(
@@ -96,9 +96,9 @@ class SurveyQuestionsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Image.asset(
-                        "lib/assets/farmer/gardener-cleaning-garden.png",
-                        width: 184,
-                        height: 180,
+                        "lib/assets/farmer_speech/farmer-speech-indaphrase.png",
+                        width: 233,
+                        height: 232,
                       ),
                       SizedBox(height: 48),
                       Padding(
@@ -269,7 +269,8 @@ class SurveyQuestionsScreen extends StatelessWidget {
                         ),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(bntRadius)),
-                      )
+                      ),
+                      SizedBox(height: 16),
                     ],
                   ),
                 ),
